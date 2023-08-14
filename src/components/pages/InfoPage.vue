@@ -9,7 +9,7 @@
     ></v-text-field>
 
     <v-text-field
-      v-model="lastname"
+      v-model="lastName"
       :counter="10"
       :rules="lastNameRules"
       label="Last name"
