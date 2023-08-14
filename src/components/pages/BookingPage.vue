@@ -1,8 +1,8 @@
 <template>
-  <div class="flex">
-    <div class="date-picker-div">
+  <div>
+    <div>
       <h1>Check-In</h1>
-      <v-row justify="center" class="row">
+      <v-row justify="center">
         <v-date-picker
           v-model="checkInDate"
           color="primary"
@@ -11,9 +11,9 @@
         ></v-date-picker>
       </v-row>
     </div>
-    <div class="date-picker-div">
+    <div>
       <h1>Check-Out</h1>
-      <v-row justify="center" class="row">
+      <v-row justify="center">
         <v-date-picker
           v-model="checkOutDate"
           color="primary"
@@ -69,22 +69,4 @@ export default {
 };
 </script>
 
-<style>
-.flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.row {
-  margin: 0 !important;
-}
-
-.date-picker-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  width: 35%;
-}
-</style>
+<style></style>

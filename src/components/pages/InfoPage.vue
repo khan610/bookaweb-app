@@ -1,51 +1,36 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="name"
-      :counter="10"
-      :rules="nameRules"
-      label="Name"
-      required
-    ></v-text-field>
+  <div>
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-text-field
+        v-model="name"
+        :rules="nameRules"
+        label="Name"
+        required
+      ></v-text-field>
 
-    <v-text-field
-      v-model="lastName"
-      :counter="10"
-      :rules="lastNameRules"
-      label="Last name"
-      required
-    ></v-text-field>
+      <v-text-field
+        v-model="lastName"
+        :rules="lastNameRules"
+        label="Last name"
+        required
+      ></v-text-field>
 
-    <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="E-mail"
-      required
-    ></v-text-field>
+      <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="E-mail"
+        required
+      ></v-text-field>
 
-    <v-text-field
-      v-model="phone"
-      :rules="phoneRules"
-      label="Phone Number"
-      required
-      maxlength="10"
-    ></v-text-field>
-
-    <v-checkbox
-      v-model="checkbox"
-      :rules="[(v) => !!v || 'You must agree to continue!']"
-      label="Do you want to submit?"
-      required
-    ></v-checkbox>
-
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-      Validate
-    </v-btn>
-
-    <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
-
-    <v-btn color="warning" @click="resetValidation"> Reset Validation </v-btn>
-  </v-form>
+      <v-text-field
+        v-model="phone"
+        :rules="phoneRules"
+        label="Phone Number"
+        required
+        maxlength="10"
+      ></v-text-field>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -79,7 +64,6 @@ export default {
         'Phone must be less than or equal to 10 digits',
     ],
     select: null,
-    checkbox: false,
   }),
 
   methods: {
@@ -96,4 +80,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>
