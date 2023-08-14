@@ -67,6 +67,12 @@ export default {
 
       if (checkInDate >= checkOutDate) this.checkOutDate = '';
     },
+    emitValues() {
+      return {
+        checkedInDate: this.checkInDate,
+        checkedOutDate: this.checkOutDate,
+      };
+    },
   },
 };
 </script>

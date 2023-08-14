@@ -4,9 +4,9 @@
       <h1 class="blue--text text-center">Your Info</h1>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
-          v-model="name"
-          :rules="nameRules"
-          label="Name"
+          v-model="firstName"
+          :rules="firstNameRules"
+          label="First name"
           required
         ></v-text-field>
 
@@ -40,10 +40,11 @@
 export default {
   data: () => ({
     valid: true,
-    name: '',
-    nameRules: [
-      (v) => !!v || 'Name is required',
-      (v) => (v && v.length <= 10) || 'Name must be less than 10 characters',
+    firstName: '',
+    firstNameRules: [
+      (v) => !!v || 'First name is required',
+      (v) =>
+        (v && v.length <= 10) || 'First name must be less than 10 characters',
     ],
     lastName: '',
     lastNameRules: [
@@ -78,6 +79,14 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    emitValues() {
+      return {
+        firstName: this.name,
+        lastName: this.lastName,
+        email: this.email,
+        phoneNumber: this.phone,
+      };
     },
   },
 };

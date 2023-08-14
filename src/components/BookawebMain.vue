@@ -26,12 +26,12 @@
           </v-flex>
           <v-flex xs6>
             <v-btn
-              v-if="currentComponent !== 'info-page'"
               @click="showNextComponent"
               color="primary"
               class="float-right"
+              :label="forwardBtnLabel"
             >
-              Next
+              {{ forwardBtnLabel }}
             </v-btn>
           </v-flex>
         </v-layout>
@@ -60,6 +60,20 @@ export default {
         'budget-page',
         'info-page',
       ],
+      booking: {
+        selectedServices: [],
+        bookingDates: {
+          checkedInDate: '',
+          checkedOutDate: '',
+        },
+        budgetType: '',
+        personalInfo: {
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: '',
+        },
+      },
     };
   },
   methods: {
@@ -74,6 +88,34 @@ export default {
       if (currentIndex > 0) {
         this.currentComponent = this.components[currentIndex - 1];
       }
+    },
+    assignEmitValue(value) {
+      switch (this.currentComponent) {
+        case 'services-page': {
+          this.booking.selectedServices = value;
+          break;
+        }
+        case 'booking-page': {
+          this.booking.bookingDates = { ...value };
+          break;
+        }
+        case 'budget-page': {
+          this.booking.budgetType = value;
+          break;
+        }
+        case 'info-page': {
+          this.booking.personalInfo = { ...value };
+          break;
+        }
+        default:
+          break;
+      }
+    },
+  },
+
+  computed: {
+    forwardBtnLabel() {
+      return this.currentComponent === 'info-page' ? 'Done' : 'Next';
     },
   },
 };

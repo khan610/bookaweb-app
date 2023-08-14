@@ -31,6 +31,11 @@ export default {
       selected: [''],
     };
   },
+  methods: {
+    emitValues() {
+      return this.selected;
+    },
+  },
 };
 </script>
 
