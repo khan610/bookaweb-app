@@ -1,6 +1,6 @@
 <template>
   <div>
-    <info-page></info-page>
+    <bookaweb-top></bookaweb-top>
     <!-- <v-btn class="ma-2" color="orange-darken-2">
       <v-icon>mdi-arrow-left</v-icon>
       Back
@@ -20,7 +20,8 @@ export default {
     // 'services-page': require('@/components/pages/ServicesPage.vue').default,
     // 'booking-page': require('@/components/pages/BookingPage.vue').default,
     // 'budget-page': require('@/components/pages/BudgetPage.vue').default,
-    'info-page': require('@/components/pages/InfoPage.vue').default,
+    // 'info-page': require('@/components/pages/InfoPage.vue').default,
+    'bookaweb-top': require('@/components/BookawebTop.vue').default,
   },
 };
 </script>
