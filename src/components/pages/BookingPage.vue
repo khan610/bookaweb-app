@@ -2,29 +2,25 @@
   <v-container fluid>
     <v-layout justify-center align-center>
       <v-flex xs12 md6>
-        <div>
-          <h1>Check-In</h1>
-          <v-row justify="center">
-            <v-date-picker
-              v-model="checkInDate"
-              color="primary"
-              :min="minCheckInDate"
-              @change="getMinCheckOutDate"
-            ></v-date-picker>
-          </v-row>
-        </div>
+        <v-layout column align-center>
+          <h1 class="blue--text">Check-In</h1>
+          <v-date-picker
+            v-model="checkInDate"
+            color="primary"
+            :min="minCheckInDate"
+            @change="getMinCheckOutDate"
+          ></v-date-picker>
+        </v-layout>
       </v-flex>
       <v-flex xs12 md6>
-        <div>
-          <h1>Check-Out</h1>
-          <v-row justify="center">
-            <v-date-picker
-              v-model="checkOutDate"
-              color="primary"
-              :min="minCheckOutDate"
-            ></v-date-picker>
-          </v-row>
-        </div>
+        <v-layout column align-center>
+          <h1 class="blue--text">Check-Out</h1>
+          <v-date-picker
+            v-model="checkOutDate"
+            color="primary"
+            :min="minCheckOutDate"
+          ></v-date-picker>
+        </v-layout>
       </v-flex>
     </v-layout>
   </v-container>
@@ -75,4 +71,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.blue--text {
+  color: blue;
+  margin-bottom: 20px;
+}
+</style>

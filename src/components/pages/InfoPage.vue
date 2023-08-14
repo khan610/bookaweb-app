@@ -1,35 +1,38 @@
 <template>
   <div>
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field
-        v-model="name"
-        :rules="nameRules"
-        label="Name"
-        required
-      ></v-text-field>
+    <v-layout align-center justify-center column>
+      <h1 class="blue--text text-center">Your Info</h1>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          v-model="name"
+          :rules="nameRules"
+          label="Name"
+          required
+        ></v-text-field>
 
-      <v-text-field
-        v-model="lastName"
-        :rules="lastNameRules"
-        label="Last name"
-        required
-      ></v-text-field>
+        <v-text-field
+          v-model="lastName"
+          :rules="lastNameRules"
+          label="Last name"
+          required
+        ></v-text-field>
 
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="E-mail"
+          required
+        ></v-text-field>
 
-      <v-text-field
-        v-model="phone"
-        :rules="phoneRules"
-        label="Phone Number"
-        required
-        maxlength="10"
-      ></v-text-field>
-    </v-form>
+        <v-text-field
+          v-model="phone"
+          :rules="phoneRules"
+          label="Phone Number"
+          required
+          maxlength="10"
+        ></v-text-field>
+      </v-form>
+    </v-layout>
   </div>
 </template>
 
@@ -81,4 +84,11 @@ export default {
 </script>
 
 <style>
+.blue--text {
+  color: blue;
+  margin-bottom: 20px;
+}
+.text-center {
+  text-align: center;
+}
 </style>

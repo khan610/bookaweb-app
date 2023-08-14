@@ -79,4 +79,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.v-application {
+  padding-top: 40px;
+}
+</style>
