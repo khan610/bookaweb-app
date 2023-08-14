@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-date-picker v-model="picker"></v-date-picker>
+      <v-date-picker v-model="picker" :min="new Date()"></v-date-picker>
     </v-row>
   </div>
 </template>
