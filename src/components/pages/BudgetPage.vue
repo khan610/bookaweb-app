@@ -5,17 +5,32 @@
         <div class="budget-box">
           <h1 class="blue--text text-center">Budget</h1>
           <v-layout justify-center>
-            <v-btn class="mb-3" color="primary" @click="setBudgetType(0)">
+            <v-btn
+              class="mb-3"
+              color="primary"
+              @click="setBudgetType(0)"
+              :outlined="index !== 0"
+            >
               <v-icon style="color: transparent">mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon style="color: transparent">mdi-currency-usd</v-icon>
             </v-btn>
-            <v-btn class="mb-3 ml-10" color="primary" @click="setBudgetType(1)">
+            <v-btn
+              class="mb-3 ml-10"
+              color="primary"
+              @click="setBudgetType(1)"
+              :outlined="index !== 1"
+            >
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon style="color: transparent">mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
             </v-btn>
-            <v-btn class="ml-10" color="primary" @click="setBudgetType(2)">
+            <v-btn
+              class="ml-10"
+              color="primary"
+              @click="setBudgetType(2)"
+              :outlined="index !== 2"
+            >
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
@@ -47,7 +62,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .blue--text {
   color: blue;
   margin-bottom: 20px;
@@ -63,9 +78,5 @@ export default {
 }
 .mb-3 {
   margin-bottom: 30px;
-}
-
-.invisibile-icons {
-  color: transparent;
 }
 </style>
