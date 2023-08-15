@@ -8,6 +8,7 @@
           :rules="firstNameRules"
           label="First name"
           required
+          @input="setNextButton"
         ></v-text-field>
 
         <v-text-field
@@ -15,6 +16,7 @@
           :rules="lastNameRules"
           label="Last name"
           required
+          @input="setNextButton"
         ></v-text-field>
 
         <v-text-field
@@ -22,6 +24,7 @@
           :rules="emailRules"
           label="E-mail"
           required
+          @input="setNextButton"
         ></v-text-field>
 
         <v-text-field
@@ -30,6 +33,8 @@
           label="Phone Number"
           required
           maxlength="10"
+          @keydown="numbersOnly"
+          @input="setNextButton"
         ></v-text-field>
       </v-form>
     </v-layout>
@@ -37,7 +42,11 @@
 </template>
 
 <script>
+import lodash from 'lodash';
 export default {
+  props: {
+    bookingInfo: Object,
+  },
   data: () => ({
     valid: true,
     firstName: '',
@@ -67,12 +76,10 @@ export default {
         (v && v.length <= 10) ||
         'Phone must be less than or equal to 10 digits',
     ],
-    select: null,
   }),
-
   methods: {
     validate() {
-      this.$refs.form.validate();
+      return this.$refs.form.validate();
     },
     reset() {
       this.$refs.form.reset();
@@ -82,12 +89,50 @@ export default {
     },
     emitValues() {
       return {
-        firstName: this.name,
+        firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
         phoneNumber: this.phone,
       };
     },
+    numbersOnly() {
+      const charCode = event.which ? event.which : event.keyCode;
+      const isNumericKey =
+        (charCode >= 48 && charCode <= 57) ||
+        (charCode >= 96 && charCode <= 105);
+
+      if (
+        !isNumericKey &&
+        charCode !== 46 &&
+        charCode !== 8 &&
+        charCode !== 37 &&
+        charCode !== 39
+      ) {
+        event.preventDefault();
+      }
+    },
+    setNextButton() {
+      if (
+        this.firstName.length > 0 &&
+        this.lastName.length > 0 &&
+        this.email.length > 0 &&
+        this.phone.length > 0
+      ) {
+        const isNextEnabled = this.$refs.form.validate();
+        this.$emit('updateNextButton', !isNextEnabled);
+      } else {
+        this.$emit('updateNextButton', true);
+      }
+    },
+  },
+
+  mounted() {
+    const personalInfo = lodash.cloneDeep(this.bookingInfo.personalInfo);
+    this.firstName = personalInfo.firstName;
+    this.lastName = personalInfo.lastName;
+    this.email = personalInfo.email;
+    this.phone = personalInfo.phoneNumber;
+    this.setNextButton();
   },
 };
 </script>

@@ -10,7 +10,7 @@
       </v-container>
     </v-app-bar>
     <v-main>
-      <component :is="currentComponent"></component>
+      <component :is="currentComponent" ref="pageRef" :bookingInfo="booking" @updateNextButton="updateNextButton"></component>
     </v-main>
     <v-footer app>
       <v-container>
@@ -30,6 +30,7 @@
               color="primary"
               class="float-right"
               :label="forwardBtnLabel"
+              :disabled="isNextDisabled"
             >
               {{ forwardBtnLabel }}
             </v-btn>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import lodash from 'lodash';
 export default {
   components: {
     'destination-page': require('@/components/pages/DestinationPage.vue')
@@ -52,6 +54,7 @@ export default {
   },
   data() {
     return {
+      isNextDisabled: true,
       currentComponent: 'destination-page',
       components: [
         'destination-page',
@@ -61,12 +64,17 @@ export default {
         'info-page',
       ],
       booking: {
+        budgetType: '',
         selectedServices: [],
+        destinationCoordinates: {
+          latitude: null,
+          longitude: null,
+          address: '',
+        },
         bookingDates: {
           checkedInDate: '',
           checkedOutDate: '',
         },
-        budgetType: '',
         personalInfo: {
           firstName: '',
           lastName: '',
@@ -78,19 +86,34 @@ export default {
   },
   methods: {
     showNextComponent() {
+      this.updateBookingObject();
+      
+      if(this.currentComponent === 'info-page') {
+        const bookingComplete = lodash.cloneDeep(this.booking);
+        console.log(bookingComplete);
+      }
+      
       const currentIndex = this.components.indexOf(this.currentComponent);
       if (currentIndex < this.components.length - 1) {
         this.currentComponent = this.components[currentIndex + 1];
+        this.isNextDisabled = true;
       }
     },
     showPreviousComponent() {
+      this.updateBookingObject();
+
       const currentIndex = this.components.indexOf(this.currentComponent);
       if (currentIndex > 0) {
         this.currentComponent = this.components[currentIndex - 1];
+        this.isNextDisabled = false;
       }
     },
-    assignEmitValue(value) {
+    assignEmittedValue(value) {
       switch (this.currentComponent) {
+        case 'destination-page': {
+          this.booking.destinationCoordinates = { ...value };
+          break;
+        }
         case 'services-page': {
           this.booking.selectedServices = value;
           break;
@@ -111,6 +134,13 @@ export default {
           break;
       }
     },
+    updateBookingObject() {
+      const emittedValue = this.$refs.pageRef.emitValues();
+      this.assignEmittedValue(emittedValue);
+    },
+    updateNextButton(value) {
+      this.isNextDisabled = value;
+    }
   },
 
   computed: {

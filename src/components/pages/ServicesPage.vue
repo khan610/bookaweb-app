@@ -26,17 +26,35 @@
 
 <script>
 export default {
+  props: {
+    bookingInfo: Object,
+  },
   data() {
     return {
-      selected: [''],
+      selected: [],
     };
   },
   methods: {
     emitValues() {
       return this.selected;
     },
+    isNextEnabled() {
+      const isNextEnabled = this.selected.length > 0;
+      this.$emit("updateNextButton", !isNextEnabled);
+    }
   },
-};
+  watch: {
+    'selected.length': function() {
+      this.isNextEnabled();
+    }
+  },  
+  mounted() {
+    const selectedServices = this.bookingInfo.selectedServices;
+    this.selected = selectedServices;
+
+    this.isNextEnabled();
+  }
+}
 </script>
 
 <style>

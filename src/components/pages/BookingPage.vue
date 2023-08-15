@@ -19,6 +19,7 @@
             v-model="checkOutDate"
             color="primary"
             :min="minCheckOutDate"
+            @change="checkIfShouldClearCheckOutDate"
           ></v-date-picker>
         </v-layout>
       </v-flex>
@@ -27,7 +28,11 @@
 </template>
 
 <script>
+import lodash from 'lodash';
 export default {
+  props: {
+    bookingInfo: Object,
+  },
   data() {
     return {
       checkInDate: this.getDefaultDate(),
@@ -36,12 +41,11 @@ export default {
       minCheckOutDate: this.getDefaultDate(true),
     };
   },
-
   methods: {
     getDefaultDate(value = false) {
       if (value) {
-        const currentDay = new Date().getDate();
         const checkOutDate = new Date();
+        const currentDay = checkOutDate.getDate();
         checkOutDate.setDate(currentDay + 1);
 
         return checkOutDate.toISOString().substr(0, 10);
@@ -53,8 +57,8 @@ export default {
     },
 
     getMinCheckOutDate() {
-      const currentDay = new Date(this.checkInDate).getDate();
       const checkOutDate = new Date(this.checkInDate);
+      const currentDay = checkOutDate.getDate();
       checkOutDate.setDate(currentDay + 1);
       this.minCheckOutDate = checkOutDate.toISOString().substr(0, 10);
 
@@ -65,15 +69,32 @@ export default {
       const checkInDate = new Date(this.checkInDate);
       const checkOutDate = new Date(this.checkOutDate);
 
-      if (checkInDate >= checkOutDate) this.checkOutDate = '';
+      if (checkInDate >= checkOutDate) {
+        this.checkOutDate = '';
+        this.$emit("updateNextButton", true);
+      } else {
+        const isNextEnabled = checkOutDate.toString() !== 'Invalid Date' && checkInDate.toString() !== 'Invalid Date';
+        this.$emit("updateNextButton", !isNextEnabled);
+      }
     },
+
     emitValues() {
       return {
         checkedInDate: this.checkInDate,
         checkedOutDate: this.checkOutDate,
       };
     },
+
   },
+  mounted() {
+    const bookingDates = lodash.cloneDeep(this.bookingInfo.bookingDates);
+    this.checkInDate = bookingDates.checkedInDate;
+    this.checkOutDate = bookingDates.checkedOutDate;
+
+    if(!!this.checkInDate && !!this.checkOutDate) {
+      this.getMinCheckOutDate();
+    }
+  }
 };
 </script>
 

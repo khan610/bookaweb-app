@@ -44,21 +44,39 @@
 
 <script>
 export default {
+  props: {
+    bookingInfo: Object,
+  },
   data() {
     return {
       budgetType: ['Standard', 'Premium', 'Deluxe'],
       index: 3,
+      selectedBudgetType: '',
     };
   },
   methods: {
     setBudgetType(budgetTypeIndex) {
       this.index = budgetTypeIndex;
+      this.selectedBudgetType = this.budgetType[this.index];
+      this.setNextButton();
     },
 
     emitValues() {
-      return this.budgetType[this.index];
+      return this.selectedBudgetType;
     },
+
+    setNextButton() {
+      const isNextEnabled = this.selectedBudgetType.length > 0 && this.index < 3 ;
+      this.$emit("updateNextButton", !isNextEnabled);
+    }
   },
+  mounted() {
+    const budgetType = this.bookingInfo.budgetType;
+    this.selectedBudgetType = budgetType;
+    this.index = this.budgetType.indexOf(budgetType);
+
+    this.setNextButton();
+  }
 };
 </script>
 
