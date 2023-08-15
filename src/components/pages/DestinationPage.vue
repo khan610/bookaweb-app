@@ -6,9 +6,8 @@
       <input v-model="address" placeholder="Enter address" />
     </div>
     <button @click="getCoordinates" class="blue--text"><h3>Confirm</h3></button>
-    <p v-if="latitude && longitude">
-      Latitude: {{ latitude }}<br />
-      Longitude: {{ longitude }}
+    <p class="green--text" v-if="latitude && longitude">
+      We have the correct address please continue
     </p>
   </div>
 </template>

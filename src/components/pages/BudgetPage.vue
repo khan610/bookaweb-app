@@ -5,17 +5,17 @@
         <div class="budget-box">
           <h1 class="blue--text text-center">Budget</h1>
           <v-layout justify-center>
-            <v-btn class="mb-3" color="primary">
+            <v-btn class="mb-3" color="primary" @click="setBudgetType(0)">
               <v-icon style="color: transparent">mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon style="color: transparent">mdi-currency-usd</v-icon>
             </v-btn>
-            <v-btn class="mb-3 ml-10" color="primary">
+            <v-btn class="mb-3 ml-10" color="primary" @click="setBudgetType(1)">
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon style="color: transparent">mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
             </v-btn>
-            <v-btn class="ml-10" color="primary">
+            <v-btn class="ml-10" color="primary" @click="setBudgetType(2)">
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
               <v-icon>mdi-currency-usd</v-icon>
@@ -29,6 +29,12 @@
 
 <script>
 export default {
+  data() {
+    return {
+      budgetType: ['Standard', 'Premium', 'Deluxe'],
+      index: 3,
+    };
+  },
   methods: {
     setBudgetType(budgetTypeIndex) {
       this.index = budgetTypeIndex;
