@@ -1,59 +1,76 @@
 <template>
-  <div>
-    <h1 class="blue--text">Unesite Adresu</h1>
-    <vue-google-autocomplete
-      v-if="googleLoaded"
-      v-model="address"
-      id="autocomplete"
-      classname="form-control"
-      placeholder="Unesite adresu i broj"
-      :options="options"
-      :api-key="googleMapsApiKey"
-      @placechanged="onPlaceChanged"
-    ></vue-google-autocomplete>
+  <div class="destination-page">
+    <h1 class="blue--text">Choose Destination</h1>
+    <div class="input-container">
+      <v-icon class="map-icon">mdi-map-marker</v-icon>
+      <input v-model="address" placeholder="Enter address" />
+    </div>
+    <button @click="getCoordinates" class="blue--text"><h3>Confirm</h3></button>
+    <p v-if="latitude && longitude">
+      Latitude: {{ latitude }}<br />
+      Longitude: {{ longitude }}
+    </p>
   </div>
 </template>
 
 <script>
-import VueGoogleAutocomplete from 'vue-google-autocomplete';
+import axios from 'axios';
 
 export default {
-  components: {
-    VueGoogleAutocomplete,
-  },
   data() {
     return {
-      googleLoaded: false,
       address: '',
-      options: {
-        types: ['geocode'],
-      },
-      googleMapsApiKey: 'AIzaSyCLGp44kYkaz2PHvU4RC2LM62kRbaRN7JA',
+      latitude: null,
+      longitude: null,
     };
   },
   methods: {
-    onPlaceChanged(place) {
-      if (window.google) {
-        console.log(place);
-      } else {
-        console.error('Google Maps API nije učitan.');
+    async getCoordinates() {
+      try {
+        const apiKey = '9bebfc7f44844ab09b471229dc788e32';
+        const response = await axios.get(
+          'https://api.opencagedata.com/geocode/v1/json',
+          {
+            params: {
+              key: apiKey,
+              q: this.address,
+            },
+          }
+        );
+
+        const location = response.data.results[0].geometry;
+        this.latitude = location.lat;
+        this.longitude = location.lng;
+
+        console.log(location, this.latitude, this.longitude);
+      } catch (error) {
+        console.error('Error getting coordinates:', error);
       }
     },
-  },
-  mounted() {
-    const googleScript = document.createElement('script');
-    googleScript.src = `https://maps.googleapis.com/maps/api/js?key=${this.googleMapsApiKey}&libraries=places`;
-    googleScript.onload = () => {
-      this.googleLoaded = true;
-    };
-    document.head.appendChild(googleScript);
   },
 };
 </script>
 
-<style>
+<style scoped>
+.destination-page {
+  text-align: center;
+  padding-top: 40px;
+}
+
 .blue--text {
   color: blue;
   margin-bottom: 20px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.map-icon {
+  color: blue;
+  margin-right: 10px;
 }
 </style>
